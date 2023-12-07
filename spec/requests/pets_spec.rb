@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Pets", type: :request do
   describe "GET /index" do
+    it'gets a lsit of pets' do
     Pet.create(
             name: 'Jazz',
             age: 3,
