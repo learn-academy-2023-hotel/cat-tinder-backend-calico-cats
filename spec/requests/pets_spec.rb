@@ -92,7 +92,111 @@ end
       end
     end
 
+describe "cannot create a pet without all valid attributes" do
+  it "Can't create a pet without a name" do
+    pet_params = {
+      pet: {
+        age: 3,
+        enjoys:'Barking and sleeping',
+        image: 'https://random.com'
+      }
+    }
+    post '/pets', params: pet_params
+    pet = JSON.parse(response.body)
+    expect(response).to have_http_status(422)
+    expect(pet['name']).to include "can't be blank"
 
+  
 
+    post '/pets', params: pet_params
+    pet = JSON.parse(response.body)
+    expect(response).to have_http_status(422)
+    expect(pet['age']).to include "can't be blank"
+
+    post '/pets', params: pet_params
+    pet = JSON.parse(response.body)
+    expect(response).to have_http_status(422)
+    expect(pet['enjoys']).to include "Can't be blank"
+  
+    post '/pets', params: pet_params
+    pet = JSON.parse(response.body)
+    expect(response).to have_http_status(422)
+    expect(pet['image']).to include "Can't be blank"
+  end
 end
 
+describe "Cannot update pet without valid attributes" do
+  it "Cannot update pet without a name" do
+    pet = {
+      pet: {
+        name:'Moose',
+        age:2,
+        enjoys:'Barking and sleeping all day',
+        image:'https://random.com'
+      }
+    }
+    post '/pets', params: pet_params
+    pet = Pet.last
+    
+    pet_params = {
+      pet: {
+        age:3,
+        enjoys: "Walks at the park",
+        image: "https://random.com"
+      }
+    }
+
+    patch '/pets', params: pet_params
+    pet = JSON.parse(response.body)
+    expect(response).to have_http_status(422)
+    expect(pet['name']).to include "Can't be blank"
+  
+
+    patch '/pets', params: pet_params
+    pet = JSON.parse(response.body)
+    expect(response).to include "Can't be blank"
+  
+
+  pet_params = {
+    pet: {
+      name:'Jazz',
+      enjoys: "Walks at the park",
+      image: "https://random.com"
+    }
+  }
+
+  patch '/pets', params: pet_params
+  pet = JSON.parse(response.body)
+  expect(response).to have_http_status(422)
+  expect(pet['age']).to include "Can't be blank"
+
+
+pet_params = {
+  pet: {
+    name:'Jazz',
+    age:3,
+    image: "https://random.com"
+  }
+}
+
+patch '/pets', params: pet_params
+pet = JSON.parse(response.body)
+expect(response).to have_http_status(422)
+expect(pet['enjoys']).to include "Can't be blank"
+
+
+pet_params = {
+  pet: {
+    name:'Moose',
+    age:3,
+    enjoys: "Walks at the park"
+  }
+}
+
+patch '/pets', params: pet_params
+pet = JSON.parse(response.body)
+expect(response).to have_http_status(422)
+expect(pet['image']).to include "Can't be blank"
+    end
+  end
+end
