@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: pet_tinder_backend_production
-  username: pet_tinder_backend
-  password: <%= ENV["PET_TINDER_BACKEND_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
