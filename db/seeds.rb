@@ -1,5 +1,9 @@
+user1 = User.where(email: "test1@example.com").first_or_create(password: "password", password_confirmation: "password")
+user2 = User.where(email: "test2@example.com").first_or_create(password: "password", password_confirmation: "password")
 
-pets = [
+
+
+user1 = [
           { 
             name: 'Jazz',
             age: 3,
@@ -11,7 +15,10 @@ pets = [
             age: 3,
             enjoys: 'Barking at the mailman',
             image: 'https://pixabay.com/photos/shepherd-dog-german-shepherd-dog-4074699/'
-          },
+          }
+        ]
+
+user2 = [
           { 
             name: 'Ruka',
             age: 6,
@@ -26,7 +33,12 @@ pets = [
           }
 ]
 
-pets.each do |pet| 
+user1.each do |pet| 
+	Pet.create(pet)
+  puts "creating pet #{pet}"
+end
+
+user2.each do |pet| 
 	Pet.create(pet)
   puts "creating pet #{pet}"
 end
